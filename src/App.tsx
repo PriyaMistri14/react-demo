@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { Component } from 'react';
 
@@ -8,47 +8,69 @@ import SearchBox from './components/search-box/search-box.component';
 
 // ....................................function based componet for monster .......................
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
-const App =()=>{
-  const [filtered_monsters, set_filtered_monstres] = useState([])
-  const [monsters, set_monster] = useState([])
+//converted into typescript
+
+import { getData } from './util/data.util';
+
+export type Monster = {
+  id: string,
+  name: string,
+  email: string
+
+}
 
 
-  const onSearchChange=(event)=>{
+
+
+const App = () => {
+  const [filtered_monsters, set_filtered_monstres] = useState<Monster[]>([])
+  const [monsters, set_monster] = useState<Monster[]>([])
+
+
+  const onSearchChange = (event:ChangeEvent<HTMLInputElement>):void => {
     // console.log(event.target.value)
-    var search_text =  event.target.value.toLocaleLowerCase()
+    var search_text = event.target.value.toLocaleLowerCase()
     // console.log(search_text)
-  
-    var f_monsters = monsters.filter((monster)=>{
-      return  monster.name.toLocaleLowerCase().includes(search_text)
-  
+
+    var f_monsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(search_text)
+
     })
-    set_filtered_monstres(f_monsters) 
+    set_filtered_monstres(f_monsters)
     console.log(filtered_monsters)
-     
+
   }
 
 
 
-  useEffect(()=>{
-    fetch("https://jsonplaceholder.typicode.com/users")
-        .then((response) => 
-          response.json())
-          .then((users) => { set_monster(users) 
-                set_filtered_monstres(users)
-    
-        })
+  useEffect(() => {
+
+    const fetchUsers = async () => {
+      const users = await getData<Monster[]>("https://jsonplaceholder.typicode.com/users")
+      set_monster(users)
+      set_filtered_monstres(users)
+    }
+
+    fetchUsers()
+    // fetch("https://jsonplaceholder.typicode.com/users")  // this fetch is centralize in util folder in getdata fun
+    //     .then((response) => 
+    //       response.json())
+    //       .then((users) => { set_monster(users) 
+    //             set_filtered_monstres(users)
+
+    //     })
 
 
-  },[])
+  }, [])
 
   return (
-       <div className="App">
-  <h1 className='app-title'>Monster Rolodex</h1>
-  <SearchBox onChangeHandler={onSearchChange}/>
-  <CardList monsters={filtered_monsters}/>
-  </div>
+    <div className="App">
+      <h1 className='app-title'>Monster Rolodex</h1>
+      <SearchBox onChangeHandler={onSearchChange} />
+      <CardList monsters={filtered_monsters} />
+    </div>
   )
 
 
@@ -155,7 +177,7 @@ const App =()=>{
 
 
 
-  
+
 
 
 

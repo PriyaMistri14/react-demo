@@ -1,11 +1,16 @@
-import { Component } from "react";
+import { Component, ChangeEvent } from "react";
 
 import '../search-box/search-box.styles.css'
 
 // .........................................function based component.............................
 
 
-const SearchBox = (props)=>{
+type props={
+    onChangeHandler: (event:ChangeEvent<HTMLInputElement>)=>void,
+    
+}
+
+const SearchBox = (props:props)=>{
     const {onChangeHandler} = props
     return <input className='search' type='search' placeholder = 'search here!' onChange={props.onChangeHandler}/>
 

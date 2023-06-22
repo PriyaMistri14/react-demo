@@ -1,28 +1,51 @@
 import { Component } from "react";
 import '../card-list/card-list.styles.css'
 
+// for typescript
+import { Monster } from "../../App";
+
+
+type props = {
+  monsters: Monster[]
+}
 
 
 // ...................................function based component.................................
 
-const CardList =(props)=>{
-    const {monsters } = props
-    
-return(
+const CardList = (props: props) => {
+  const { monsters } = props
+  return (
     <div className="card-list">
-    {
-      monsters.map((monster) => {
-        return <div key={monster.id} className='card-container'>
+      {
+        monsters.map((monster) => {
+          return <div key={monster.id} className='card-container'>
             <img alt="monster" src={`https://robohash.org/${monster.id}?set=set2`} />
             <h3>{monster.name}</h3>
             <p>{monster.email}</p>
-            
-            </div>
 
-      })
-    }
-  </div>
-)
+          </div>
+
+        })
+      }
+    </div>
+  )
+
+
+  // return(
+  //     <div className="card-list">
+  //     {
+  //       monsters.map((monster) => {
+  //         return <div key={monster.id} className='card-container'>
+  //             <img alt="monster" src={`https://robohash.org/${monster.id}?set=set2`} />
+  //             <h3>{monster.name}</h3>
+  //             <p>{monster.email}</p>
+
+  //             </div>
+
+  //       })
+  //     }
+  //   </div>
+  // )
 
 
 }
@@ -47,7 +70,7 @@ return(
 //             <img alt="monster" src={`https://robohash.org/${monster.id}?set=set2`} />
 //             <h3>{monster.name}</h3>
 //             <p>{monster.email}</p>
-            
+
 //             </div>
 
 //       })
